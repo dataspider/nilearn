@@ -568,8 +568,13 @@ class GlassBrainAxes(BaseAxes):
                 self.ax.add_patch(arrow)
             # Otherwise a line
             else:
-                line = lines.Line2D(xdata, ydata, **this_kwargs)
-                self.ax.add_line(line)
+                if "connectionstyle" not in this_kwargs and "arrowstyle" not in this_kwargs:
+                    line = lines.Line2D(xdata, ydata, **this_kwargs)
+                    self.ax.add_line(line)
+                else:
+                    self.ax.annotate("", (xdata[0], ydata[0]), (xdata[1], ydata[1]),
+                                 arrowprops=dict(**this_kwargs),
+                                 )
 
 
 ###############################################################################
